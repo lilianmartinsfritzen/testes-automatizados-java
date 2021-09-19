@@ -35,7 +35,8 @@ public class AccountTests {
 		Assertions.assertEquals(expectedValue, acc.getBalance());
 	}
 	
-	@Test 		// Não utilizamos o When, porque só existe um cenário neste caso, é só a chamada simples do método, não possui argumentos.
+				// Testa o saque total, limpa e retorna o saldo
+	@Test		// Não utilizamos o When, porque só existe um cenário neste caso, é só a chamada simples do método, não possui argumentos.
 	public void fullWithdrawShouldClearBalanceAndReturnFullBalance() {
 		
 		double expectedValue = 0.0;
@@ -47,4 +48,26 @@ public class AccountTests {
 		Assertions.assertTrue(expectedValue == acc.getBalance());
 		Assertions.assertTrue(result == initialBalance);
 	}
+	
+	@Test		// Verifica a retirada com saldo suficiente e retorna o valor restante
+	public void withdrawShouldDecreaseBalanceWhenSufficientBalance() {
+		
+		Account acc = AccountFactory.createAccount(800.0);
+		
+		acc.withdraw(500.0);
+		
+		Assertions.assertEquals(300.0, acc.getBalance());
+	}
+	
+	@Test		// Quando o saque é maior que o saldo
+	public void withdrawShouldThrowExceptionWhenInsufficientBalance() {
+		
+		// No JUnit 5 em assertions para tratamento de exceção temos que passar primeiro tipo da exceção com o .class para dizer que é um tipo
+		// e em seguida criar uma função lâmbida contendo o procedimento executável
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			Account acc = AccountFactory.createAccount(800.0);
+			acc.withdraw(801.0);
+		});
+	}
 }
+
