@@ -8,7 +8,7 @@ import entities.Account;
 public class AccountTests {
 	
 	@Test		// <AÇÃO> should <EFEITO> [when <CENÁRIO>]
-	public void depositShouldIncreaseBalanceWhenPositiveAmount() {
+	public void depositShouldIncreaseBalanceAndDiscountFeeWhenPositiveAmount() {
 		// PADRÃO AAA
 		// Arrange: para instanciar os objetos necessários (o teste abaixo está com exemplo concreto)
 		double amount = 200.0;
